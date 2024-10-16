@@ -9,8 +9,7 @@ function Cue({ setRef, cueRef, position }) {
       speed={0.6}
       position={position}
       castShadow>
-      <cylinderGeometry attach='geometry' args={[0.1, 0.15, 12, 32, 32]} />
-      <meshPhongMaterial attach='material' color={0xffffff} />
+
     </mesh>
   );
 }

@@ -4,11 +4,30 @@ import Constants from './Constants';
 function pocketed(ballRef) {
   ballRef.current.speed.x = 0;
   ballRef.current.speed.y = 0;
-  ballRef.current.position.set(50, 50, 0);
+  
+  if(ballRef.current.id == 38){
+	  ballRef.current.position.set(0, -16, 0);
+	  return
+  }
+  ballRef.current.position.set(0, 28, 0);
 }
 
-function shoot(force, ref) {
-  const angle = ref.current.rotation.z - (-90 * Math.PI) / 180;
+function shoot(force, ref, e) {
+  //Only shoots if the white ball is stopped
+  
+  if(ref.current.speed.y > 0.003 || ref.current.speed.y < -0.003){
+	//return
+  } 
+  
+  let x = e.clientX || e.touches[0].clientX
+  let y = e.clientY || e.touches[0].clientY
+  
+  x = ( x / window.innerWidth ) * 2 - 1;
+  y = - ( y / window.innerHeight ) * 2 + 1; 
+  
+  console.log(x,y);
+  
+  const angle = Math.atan2(y, x)
   const speedX = Math.cos(angle) * force;
   const speedY = Math.sin(angle) * force;
   ref.current.speed.x = speedX;
@@ -24,7 +43,7 @@ function checkBallCollision(ball1, ball2) {
   if (distance < 1) {
     // Collision!
     // Play sound
-    // sound.play();
+    //sound.play();
     const angle1 = Math.atan2(ball1.current.speed.y, ball1.current.speed.x);
     const angle2 = Math.atan2(ball2.current.speed.y, ball2.current.speed.x);
 

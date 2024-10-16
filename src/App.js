@@ -9,34 +9,13 @@ import Button from './components/Button';
 import Icon from './svg/ic_code.svg';
 
 function App() {
-  const [modal, setModal] = useState(true);
   const [coeff, setCoeff] = useState(0.01);
   return (
     <>
-      {modal && (
-        <Modal
-          handler={() => {
-            setModal(!modal);
-          }}
-        />
-      )}
-      <Button handler={() => setCoeff(0.01)} text='Normal'>
-        Normal
-      </Button>
-      <Button
-        top='128px'
-        handler={() => setCoeff(0.03)}
-        text='Heavy Friction'
-      />
-      <Button
-        top='192px'
-        handler={() => setCoeff(0.001)}
-        text='Heavy Restitution'
-      />
       <Canvas>
         <Scene coeff={coeff} />
         <Controls
-          enableRotate
+          enableRotate={false}
           enablePan={false}
           maxDistance={100}
           minDistance={5}
@@ -45,7 +24,7 @@ function App() {
         />
       </Canvas>
       <a
-        href='https://github.com/manan30/billiards'
+        href='https://github.com/Gui1949/billiards-mobile'
         target='_blank'
         rel='noopener noreferrer'>
         <CodeFAB src={Icon} />

@@ -73,26 +73,30 @@ function Scene({ coeff }) {
 
   camera.fov = 45;
   camera.aspect = window.innerWidth / window.innerHeight;
-  camera.near = 0.1;
+  camera.near = -150;
   camera.far = 1000;
+  
 
-  camera.up.set(0, 0, 1);
-  camera.position.set(-5, 7, 5);
-
-  (() => zeroBallRef.current && camera.lookAt(zeroBallRef.current.position))();
-  (() =>
-    zeroBallRef.current &&
-    camera.position.set(
-      zeroBallRef.current.position.x,
-      zeroBallRef.current.position.y,
-      45
-    ))();
+  camera.up.set(0, 1, 1);
+  camera.position.set(0, -0.29, 40);
+    
+    document.addEventListener('dblclick', () => console.log(camera));
 
   React.useEffect(() => {
-    document.addEventListener('keydown', e =>
+    document.addEventListener('dblclick', e => {
+		console.log(e);
       KeyDownListerner(e, cueRef.current.cueBallRef)
+	})	
+	    document.addEventListener('touchstart', e => {
+		console.log(e);
+      KeyDownListerner(e, cueRef.current.cueBallRef)
+	}
     );
-    return () => document.removeEventListener('keydown', KeyDownListerner);
+    
+    return () => {
+	document.removeEventListener('dblclick', KeyDownListerner)
+	document.removeEventListener('touchstart', KeyDownListerner)	
+	};
   }, [cueRef]);
 
   useFrame((state, delta) => {
