@@ -85,11 +85,11 @@ function Scene({ coeff }) {
   React.useEffect(() => {
     document.addEventListener('dblclick', e => {
 		console.log(e);
-      KeyDownListerner(e, cueRef.current.cueBallRef)
+      KeyDownListerner(e, cueRef.current.cueBallRef, camera, zeroBallRef)
 	})	
 	    document.addEventListener('touchstart', e => {
 		console.log(e);
-      KeyDownListerner(e, cueRef.current.cueBallRef)
+      KeyDownListerner(e, cueRef.current.cueBallRef, camera, zeroBallRef)
 	}
     );
     

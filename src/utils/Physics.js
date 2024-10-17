@@ -1,5 +1,15 @@
-import { Matrix4, Vector3 } from 'three';
+import { Matrix4, Vector3, Raycaster, Plane, Vector2, Quaternion, Euler } from 'three';
 import Constants from './Constants';
+
+var planeIntersect = new Vector3(); // point of intersection with the plane
+var shift = new Vector3()
+var plane = new Plane();
+var mouse = new Vector2()
+var raycaster = new Raycaster()
+var pIntersect = new Vector3(); // point of intersection with an object (plane's point)
+
+var pNormal = new Vector3(0, -16, 0); // plane's normal
+var dragObject
 
 function pocketed(ballRef) {
   ballRef.current.speed.x = 0;
@@ -12,22 +22,58 @@ function pocketed(ballRef) {
   ballRef.current.position.set(0, 28, 0);
 }
 
-function shoot(force, ref, e) {
+function shoot(force, ref, e, camera, zero) {
   //Only shoots if the white ball is stopped
   
   if(ref.current.speed.y > 0.003 || ref.current.speed.y < -0.003){
 	//return
-  } 
+  }
   
-  let x = e.clientX || e.touches[0].clientX
-  let y = e.clientY || e.touches[0].clientY
+  console.log(ref);
+  console.log(camera);
   
-  x = ( x / window.innerWidth ) * 2 - 1;
-  y = - ( y / window.innerHeight ) * 2 + 1; 
+  ref.current.rotation.set(0, 0, 0);   
   
-  console.log(x,y);
+  let x = e.clientX || e.targetTouches[0].clientX
+  let y = e.clientY || e.targetTouches[0].clientY  
   
-  const angle = Math.atan2(y, x)
+  //x = x / ref.current.position.x || 0
+  //y = ((y / ref.current.position.y) - ref.current.position.y) * -1
+  
+  
+	x = ( x  / window.innerWidth ) * 2 - 1
+	y = - (y / window.innerHeight ) * 2 + 1
+    
+    
+    	const a = {
+		x: ref.current.position.x,
+		y: ref.current.position.y
+	};
+
+  
+	var vector = new Vector3(x, y, 0.5);	
+
+	console.log(camera);
+	
+	vector.unproject( camera );
+	
+	
+	var dir = vector.sub( camera.position ).normalize();
+	var distance = - camera.position.z / dir.z;
+	var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
+	
+	//ref.current.position.set(pos.x, pos.y, pos.z
+
+	const p = {
+		x: pos.x,
+		y: pos.y
+	};
+
+	// angle in degrees, from example, same data
+	const angle = Math.atan2(p.y - a.y, p.x - a.x); // 45
+  
+  
+  
   const speedX = Math.cos(angle) * force;
   const speedY = Math.sin(angle) * force;
   ref.current.speed.x = speedX;
