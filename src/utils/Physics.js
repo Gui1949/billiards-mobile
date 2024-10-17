@@ -62,15 +62,13 @@ function shoot(force, ref, e, camera, zero) {
 	var distance = - camera.position.z / dir.z;
 	var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
 	
-	//ref.current.position.set(pos.x, pos.y, pos.z
 
 	const p = {
 		x: pos.x,
 		y: pos.y
 	};
 
-	// angle in degrees, from example, same data
-	const angle = Math.atan2(p.y - a.y, p.x - a.x); // 45
+	const angle = Math.atan2(p.y - a.y, p.x - a.x);
   
   
   

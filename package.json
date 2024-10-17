@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "build": "react-scripts build",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build && mv build docs",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
